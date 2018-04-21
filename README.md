@@ -1,1 +1,2 @@
-# kata-typescript-cpu-monitor
+# TypeScript CPU monitor Kata
+
