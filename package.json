@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,22 @@
   "bugs": {
     "url": "https://github.com/spontoreau/typescript-cpu-monitor-kata/issues"
   },
-  "homepage": "https://github.com/spontoreau/typescript-cpu-monitor-kata#readme"
+  "homepage": "https://github.com/spontoreau/typescript-cpu-monitor-kata#readme",
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/preprocessor.js"
+    },
+    "testMatch": [
+      "**/tests/*.+(ts)"
+    ]
+  },
+  "devDependencies": {
+    "@types/jest": "^22.2.3",
+    "jest": "^22.4.3",
+    "typescript": "^2.8.3"
+  }
 }
