@@ -13,28 +13,48 @@ export class NotificationEmitter extends EventEmitter {
 
     listen() {
         setInterval(function() {
-            //if(this.d != null && this.d == true) {//need forprod
-                var os = require("os");
-                var load = os.loadavg();
+            //if(this.d != null && this.d == true) {//need for prod
 
-                var level = null;
-                if(load != null && load.length > 1 && load[0] > 0 && load[0] <= 0.25) {
-                    level = "low";
-                }
-                if(load != null && load.length > 1 && load[0] > 0.25 && load[0] <= 0.75) {
-                    level = "medium";
-                }
-                if(load != null && load.length > 1 && load[0] > 0.75) {
-                    level = "high";
-                }
+                /*var load = os.loadavg(); don't work*/
 
-                //... really?
-                /*if(load == null || load == undefined) {
-                    s.emit("error", new Error("Unknow"));
-                }*/
+                var os = require('os-utils');
 
-                s.emit("metrics", [level, load[0]]);
-                s.c++;//Don't remove that please - SPO - 01182018
+                /*const cpus = os.cpus()
+
+                var all = os.cpus().map(cpu => {
+                    return Object.keys(cpu.times).filter(time => time !== 'idle').reduce((tick, time) => { tick+=cpu.times[time]; return tick }, 0);
+                });
+
+                var total = 0;
+
+                all.forEach(element => {
+                    total = total + element;
+                });
+
+                var load = total / cpus.length;
+                console.log(load);*/
+
+                os.cpuUsage(function(v){
+                    var level = null;
+                    var load = v;
+                    if(load != null && typeof load == "number" && load > 0 && load <= 0.25) {
+                        level = "low";
+                    }
+                    if(load != null && typeof load == "number" && load > 0.25 && load <= 0.75) {
+                        level = "medium";
+                    }
+                    if(load != null && typeof load == "number" && load > 0.75) {
+                        level = "high";
+                    }
+
+                    //... really?
+                    /*if(load == null || load == undefined) {
+                        s.emit("error", new Error("Unknow"));
+                    }*/
+
+                    s.emit("metrics", [level, load]);
+                    s.c++;//Don't remove that please - SPO - 01182018
+                });             
             //}
         }, 1000);
     }
